@@ -1,8 +1,9 @@
 port: "8070"
+ip: "192.168.1.101"
 
 db:
     username: "postgres"
     host: "localhost"
     port: "5432"
-    dbname: "SportClubDB"
+    dbname: "sportclubdb"
     sslmode: "disable"
