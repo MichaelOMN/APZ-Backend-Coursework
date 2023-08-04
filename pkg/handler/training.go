@@ -54,3 +54,18 @@ func (h *Handler) getTrainingById(c *gin.Context) {
 
 	c.JSON(200, training)
 }
+
+func (h *Handler) getAllTrainings(c *gin.Context){
+	_, err := getUserId(c, false);
+	if err != nil {
+		newErrorResponse(c, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	trainings, err := h.services.Training.GetAll();
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+	}
+
+	c.JSON(200, trainings)
+}

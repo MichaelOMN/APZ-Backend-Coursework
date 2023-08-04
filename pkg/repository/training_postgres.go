@@ -31,7 +31,12 @@ func (a *TrainingPostgres) Create(ac entity.Training) (int, error) {
 }
 
 func (a *TrainingPostgres) GetAll() ([]entity.Training, error) {
-	return []entity.Training{}, nil
+	query := `select * from trainings`
+	var ts []entity.Training
+
+	err := a.db.Select(&ts, query)
+
+	return ts, err
 }
 
 func (a *TrainingPostgres) GetById(acid int) (entity.Training, error) {

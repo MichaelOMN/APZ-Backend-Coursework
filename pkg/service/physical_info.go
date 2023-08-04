@@ -23,8 +23,8 @@ func (p *PhysicalInfoService) GetAllWithVisitorId(visitorId int) ([]entity.Physi
 	return pis, err
 }
 
-func (p *PhysicalInfoService) GetByIdAndVisitorId(pinfoId, visitorId int) (entity.PhysicalInfo, error) {
-	pi, err := p.repo.GetByIdAndVisitorId(pinfoId, visitorId)
+func (p *PhysicalInfoService) GetByVisitorId(visitorId int) (entity.PhysicalInfo, error) {
+	pi, err := p.repo.GetByVisitorId(visitorId)
 	return pi, err
 }
 
@@ -33,6 +33,6 @@ func (p *PhysicalInfoService) Delete(visitorId, pinfoId int) error {
 	return err
 }
 
-func (p *PhysicalInfoService) Update(visitorId int, pinfoId int, form entity.PhysicalInfoUpdateForm) error {
-	return p.repo.Update(visitorId, pinfoId, form)
+func (p *PhysicalInfoService) Update(visitorId int, form entity.PhysicalInfoUpdateForm) error {
+	return p.repo.Update(visitorId, form)
 }

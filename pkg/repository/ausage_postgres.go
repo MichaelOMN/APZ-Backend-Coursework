@@ -69,7 +69,11 @@ func (a *ActivityUsagePostgres) GetByActUsageId(visitorId int, activityUsageId i
 	return au, nil
 }
 
-func (a *ActivityUsagePostgres) Delete(visitorId, activityId int) error {
+func (a *ActivityUsagePostgres) Delete(visitorId, activityUsageId int) error {
+	query := `delete from activityusage where visitor_id = $1 and id = $2`
+	if _, err := a.db.Exec(query, visitorId, activityUsageId); err != nil {
+		return err;
+	}
 	return nil
 }
 

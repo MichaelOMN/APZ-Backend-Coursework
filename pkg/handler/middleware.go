@@ -3,9 +3,11 @@ package handler
 import (
 	"errors"
 	"net/http"
+
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -38,7 +40,7 @@ func (h *Handler) visitorIdentity(c *gin.Context) {
 		newErrorResponse(c, http.StatusUnauthorized, err.Error())
 		return
 	}
-
+	logrus.Infof("userId is: %d\n", userId);
 	c.Set(visitorCtx, userId)
 }
 

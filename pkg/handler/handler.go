@@ -4,6 +4,7 @@ import (
 	"sport_app/pkg/service"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 type Handler struct {
@@ -15,6 +16,7 @@ func NewHandler(services *service.Service) *Handler {
 }
 
 func (h *Handler) pingRequest(c *gin.Context) {
+	logrus.Info("Server was pinged!")
 	c.String(200, "Pong from web-server!")
 }
 
@@ -58,8 +60,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			physicalInfos.POST("/", h.createPhysicalInfo)
 			//physicalInfos.GET("/", h.getAllPhysicalInfosByVisitorId)
-			physicalInfos.GET("/:id", h.getPhysicalInfoByVisitorId)
-			physicalInfos.PUT("/:id", h.updatePhysicalInfoByVisitorId)
+			physicalInfos.GET("/", h.getPhysicalInfoByVisitorId)
+			physicalInfos.PUT("/", h.updatePhysicalInfoByVisitorId)
 			//physicalInfos.DELETE("/:id", h.deletePhysicalInfoByVisitorId)
 		}
 
@@ -69,6 +71,12 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			//trainings.GET("/", h.getAllTrainings)
 			trainings.GET("/:id", h.getTrainingById)
 			//trainings.DELETE("/:id", h.deleteTrainingById)
+		}
+
+		trainings2 := api.Group("/trainings", h.visitorIdentity)
+		{
+			trainings2.GET("/", h.getAllTrainings)
+			trainings2.GET("/club/:id", h.getClubById)
 		}
 
 		statestypes := api.Group("/states_types", h.coachIdentity)
@@ -104,7 +112,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			//actUsage.GET("/", h.getAllActUsageByVisitorId)
 			actUsage.GET("/", h.getActUsageByIdAndVisitorId)
 			//actUsage.PUT("/:id", h.updateActUsageByVisitorId)
-			//actUsage.DELETE("/:id", h.deleteActUsageByVisitorId)
+			actUsage.DELETE("/:id", h.deleteActUsageByVisitorId)
 		}
 
 		pst := api.Group("/physical_state", h.visitorIdentity)

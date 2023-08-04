@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	entity "sport_app"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -49,4 +50,26 @@ func (h *Handler) getActUsageByIdAndVisitorId(c *gin.Context) {
 	}
 
 	c.JSON(200, activity_usage)
+}
+
+func (h *Handler) deleteActUsageByVisitorId(c *gin.Context){
+	visitorId, err := getUserId(c, false)
+	if err != nil {
+		newErrorResponse(c, http.StatusUnauthorized, "Unauthorized")
+		return
+	}
+
+	id_param, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+		return
+	}
+
+	err = h.services.ActivityUsage.Delete(visitorId, id_param)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(200, statusResponse{Status: "ok"})
 }

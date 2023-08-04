@@ -33,6 +33,6 @@ func (ac *ActivityUsageService) Update(visitorId int, form entity.ActivityUsageU
 	return ac.repo.Update(visitorId, form)
 }
 
-func (ac *ActivityUsageService) Delete(visitorId, activityId int) error {
-	return ac.repo.Delete(visitorId, activityId)
+func (ac *ActivityUsageService) Delete(visitorId, activityUsageId int) error {
+	return ac.repo.Delete(visitorId, activityUsageId)
 }

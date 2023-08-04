@@ -25,9 +25,9 @@ type Club interface {
 type PhysicalInfo interface {
 	Create(ph entity.PhysicalInfo) (int, error)
 	GetAllWithVisitorId(visitorId int) ([]entity.PhysicalInfo, error)
-	GetByIdAndVisitorId(phId, visitorId int) (entity.PhysicalInfo, error)
+	GetByVisitorId(visitorId int) (entity.PhysicalInfo, error)
 	Delete(phId int, userId int) error
-	Update(visitorId int, pinfoId int, ph entity.PhysicalInfoUpdateForm) error
+	Update(visitorId int, ph entity.PhysicalInfoUpdateForm) error
 }
 
 type Training interface {
@@ -67,7 +67,7 @@ type ActivityUsage interface {
 	GetAll(visitorId, activityId int) ([]entity.ActivityUsage, error)
 	GetById(visitorId int, activityName string) (entity.ActivityUsage, error)
 	GetByActUsageId(visitorId int, activityId int) (entity.ActivityUsage, error)
-	Delete(visitorId, activityId int) error
+	Delete(visitorId, activityUsageId int) error
 	Update(visitorId int, au entity.ActivityUsageUpdateForm) error
 }
 

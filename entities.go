@@ -37,13 +37,13 @@ type ClubUpdateForm struct {
 }
 
 type PhysicalInfoUpdateForm struct {
-	Weight *string `json:"weight"`
-	Height *string `json:"height"`
+	Weight *float64 `json:"weight"`
+	Height *float64 `json:"height"`
 }
 
 func (piuf PhysicalInfoUpdateForm) Validate() error {
-	if piuf.Height == nil && piuf.Weight == nil {
-		return errors.New("weight and height fields abscent")
+	if *piuf.Height <= 0 || *piuf.Weight <= 0 {
+		return errors.New("weight and height fields invalid")
 	}
 	return nil
 }

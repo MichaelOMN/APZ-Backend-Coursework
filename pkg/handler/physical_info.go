@@ -3,7 +3,6 @@ package handler
 import (
 	"net/http"
 	entity "sport_app"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -41,13 +40,13 @@ func (h *Handler) getPhysicalInfoByVisitorId(c *gin.Context) {
 		return
 	}
 
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
-		return
-	}
+	// id, err := strconv.Atoi(c.Param("id"))
+	// if err != nil {
+	// 	newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+	// 	return
+	// }
 
-	pinfo, err := h.services.PhysicalInfo.GetByIdAndVisitorId(id, userId)
+	pinfo, err := h.services.PhysicalInfo.GetByVisitorId(userId)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
@@ -63,11 +62,11 @@ func (h *Handler) updatePhysicalInfoByVisitorId(c *gin.Context) {
 		return
 	}
 
-	id_param, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		newErrorResponse(c, http.StatusBadRequest, "invalid id param")
-		return
-	}
+	// id_param, err := strconv.Atoi(c.Param("id"))
+	// if err != nil {
+	// 	newErrorResponse(c, http.StatusBadRequest, "invalid id param")
+	// 	return
+	// }
 
 	var input entity.PhysicalInfoUpdateForm
 	if err := c.BindJSON(&input); err != nil {
@@ -79,7 +78,7 @@ func (h *Handler) updatePhysicalInfoByVisitorId(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, errorResponse{Message: err.Error()})
 	}
 
-	if err := h.services.PhysicalInfo.Update(userId, id_param, input); err != nil {
+	if err := h.services.PhysicalInfo.Update(userId, input); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}

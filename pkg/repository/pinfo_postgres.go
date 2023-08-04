@@ -39,10 +39,10 @@ func (a *PhysicalInfoPostgres) GetAllWithVisitorId(visitorId int) ([]entity.Phys
 	return []entity.PhysicalInfo{}, nil
 }
 
-func (a *PhysicalInfoPostgres) GetByIdAndVisitorId(phId, visitorId int) (entity.PhysicalInfo, error) {
-	q := `select id, visitor_id, height, weight from PhysicalInfo where id = $1 and visitor_id = $2`
+func (a *PhysicalInfoPostgres) GetByVisitorId(visitorId int) (entity.PhysicalInfo, error) {
+	q := `select id, visitor_id, height, weight from PhysicalInfo where visitor_id = $1`
 	var pi entity.PhysicalInfo
-	err := a.db.Get(&pi, q, phId, visitorId)
+	err := a.db.Get(&pi, q, visitorId)
 	if err != nil {
 		return pi, err
 	}
@@ -54,7 +54,7 @@ func (a *PhysicalInfoPostgres) Delete(acid int, userId int) error {
 	return nil
 }
 
-func (a *PhysicalInfoPostgres) Update(userId int, pinfoId int, ac entity.PhysicalInfoUpdateForm) error {
+func (a *PhysicalInfoPostgres) Update(userId int, ac entity.PhysicalInfoUpdateForm) error {
 	setValues := make([]string, 0)
 	args := make([]interface{}, 0)
 	argId := 1
@@ -73,10 +73,10 @@ func (a *PhysicalInfoPostgres) Update(userId int, pinfoId int, ac entity.Physica
 
 	setQuery := strings.Join(setValues, ", ")
 
-	query := fmt.Sprintf("UPDATE %s tl SET %s where id=$%d and visitor_id=$%d",
-		"PhysicalInfo", setQuery, argId, argId+1)
+	query := fmt.Sprintf("UPDATE %s tl SET %s where visitor_id=$%d",
+		"PhysicalInfo", setQuery, argId)
 
-	args = append(args, pinfoId, userId)
+	args = append(args, userId)
 
 	logrus.Debugf("updateQuery: %s", query)
 	logrus.Debugf("args: %s", args)

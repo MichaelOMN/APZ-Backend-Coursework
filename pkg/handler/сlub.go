@@ -50,7 +50,7 @@ func (h *Handler) getAllClubs(c *gin.Context) {
 }
 
 func (h *Handler) getClubById(c *gin.Context) {
-	_, err := getUserId(c, true)
+	_, err := getUserId(c, false)
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
