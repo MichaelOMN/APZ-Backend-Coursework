@@ -96,3 +96,6 @@ curl -X POST http://192.168.1.101:8070/api/activity_state/ \
 
 curl -X GET http://192.168.1.101:8070/api/activity_state/4 \
 -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbnRpdHlOYW1lIjoidmVsb2VyZyMxMjM0NSIsImV4cCI6IjIwMjMtMDctMjBUMDM6MzQ6NTAuNjk3MDA1OCswMzowMCIsImlhdCI6IjIwMjMtMDYtMjBUMDM6MzQ6NTAuNjk3MDA1OCswMzowMCJ9.FELxnXWoPa-IvhwH_uPqfGoMBt2syBCCOQMZkpNSG0M'
+
+curl -X GET http://192.168.1.101:8070/api/stats/activity_usages?activityName=veloerg%2312345679 \
+-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTM5OTE3NjIsImlhdCI6MTY5MTM5OTc2MiwiZW50aXR5X2lkIjozfQ._W6hG8w31qdRkO_7jsBkbYqGccUZC3WkspL1s1zkggg'

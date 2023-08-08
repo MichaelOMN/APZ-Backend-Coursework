@@ -97,10 +97,29 @@ drop table if exists Visitors;
 
 
 
+use SportClubDB;
+
+select ast.* from activitystates ast
+	join activityusage aus on ast.activity_name = aus.activity_name AND
+		ast.at_datetime between aus.usage_start_datetime and aus.usage_end_datetime
+	where aus.visitor_id = 3 AND aus.activity_name = 'veloerg#12345679';
 
 
 
 
+insert into activityusage(visitor_id, activity_name,usage_start_datetime,usage_end_datetime)
+values
+(3, 'veloerg#12345679', '2023-08-07 00:30:00', '2023-08-07 00:34:00');
+
+
+select * from activitystates;
+select * from visitors;
+select * from activityusage;
+
+
+--delete from activitystates;
+
+select * from activities;
 
 
 

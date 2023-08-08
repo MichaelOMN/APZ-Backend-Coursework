@@ -14,6 +14,10 @@ type Authorization interface {
 	GenerateTokenForActivity(name string) (string, error)
 }
 
+type Stats interface {
+	GetActivityStateStats(visitorId int, activityName string) ([]entity.ActivityState, error)
+}
+
 type Club interface {
 	Create(club entity.Club) (int, error)
 	GetAll() ([]entity.Club, error)
@@ -98,6 +102,7 @@ type Service struct {
 	ActivityUsage
 	PhysicalState
 	ActivityState
+	Stats
 }
 
 func NewService(repos *repository.Repository) *Service {
@@ -112,5 +117,6 @@ func NewService(repos *repository.Repository) *Service {
 		ActivityUsage: NewActivityUsageService(repos.ActivityUsage),
 		PhysicalState: NewPhysicalStateService(repos.PhysicalState),
 		ActivityState: NewActivityStateService(repos.ActivityState),
+		Stats: NewStatsService(repos.Stats),
 	}
 }

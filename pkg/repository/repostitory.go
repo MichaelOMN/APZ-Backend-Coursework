@@ -13,6 +13,10 @@ type Authorization interface {
 	GetCoach(username, password string) (entity.Coach, error)
 }
 
+type Stats interface {
+	GetActivityStateStats(visitorId int, activityName string) ([]entity.ActivityState, error)
+}
+
 type Club interface {
 	Create(club entity.Club) (int, error)
 	GetAll() ([]entity.Club, error)
@@ -97,6 +101,7 @@ type Repository struct {
 	ActivityUsage
 	PhysicalState
 	ActivityState
+	Stats
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
@@ -111,5 +116,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 		ActivityUsage: NewActivityUsagePostgres(db),
 		PhysicalState: NewPhysicalStatePostgres(db),
 		ActivityState: NewActivityStatePostgres(db),
+		Stats: NewStatsPostgres(db),
 	}
 }

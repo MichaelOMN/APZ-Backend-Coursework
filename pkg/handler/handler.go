@@ -47,6 +47,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	api := router.Group("/api")
 	{
+		stats := api.Group("/stats", h.visitorIdentity)
+		{
+			stats.GET("/activity_usages", h.getActivityUsageStats)
+		}
+
 		clubs := api.Group("/club", h.coachIdentity)
 		{
 			clubs.POST("/", h.createClub)
